@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>When To Meet Pro</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+        <link rel="stylesheet" href="static/css/style.css" />
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    </head>
+    <body class="bg-gray-100 p-4">
+        <div id="entrysection"
+            class="max-w-md mx-auto bg-white p-6 rounded shadow">
+            <div id="nav">
+                <div class="flex justify-between mb-4">
+                    <button id="nav-login-button"
+                        class="px-4 py-2 bg-blue-500 text-white rounded">Log
+                        in</button>
+                    <button id="nav-signup-button"
+                        class="px-4 py-2 bg-gray-300 text-black rounded">Sign
+                        up</button>
+                </div>
+            </div>
+
+            <!-- Log in Section -->
+            <div id="tabLogin">
+                <div class="mb-4">
+                    <input type="text" id="login-email" placeholder="Email"
+                        class="w-full border px-3 py-2 rounded" />
+                </div>
+                <div class="mb-4">
+                    <input type="password" id="login-password"
+                        placeholder="Password"
+                        class="w-full border px-3 py-2 rounded" />
+                </div>
+            </div>
+
+            <!-- Sign in Section -->
+            <div id="tabSignup" class="hidden">
+                <div class="mb-4">
+                    <input type="text" id="signup-email" placeholder="Email"
+                        class="w-full border px-3 py-2 rounded" />
+                </div>
+                <div class="mb-4">
+                    <input type="password" id="signup-password"
+                        placeholder="Password"
+                        class="w-full border px-3 py-2 rounded" />
+                </div>
+            </div>
+            <div>
+                <button type="button" id="submit-button"
+                    class="w-full bg-blue-500 text-white py-2 rounded">Log In</button>
+            </div>
+        </div>
+
+        <script src="static/js/script.js"></script>
+    </body>
+</html>
