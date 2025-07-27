@@ -13,7 +13,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Grizmo2610/CVScanner">
+  <a href="https://github.com/Grizmo2610/WhenToMeet">
     <img src="static/images/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
@@ -27,9 +27,9 @@
     <br />
     <a href="#">View Demo</a>
     ·
-    <a href="https://github.com/Grizmo2610/CVScanner/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
+    <a href="https://github.com/Grizmo2610/WhenToMeet/issues/new?labels=bug&template=bug-report---.md">Report Bug</a>
     ·
-    <a href="https://github.com/Grizmo2610/CVScanner/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
+    <a href="https://github.com/Grizmo2610/WhenToMeet/issues/new?labels=enhancement&template=feature-request---.md">Request Feature</a>
   </p>
 </div>
 
@@ -71,6 +71,9 @@
 ---
 
 ## 🗺️ Roadmap
+* [x] Implement authentication (signup/login) page
+* [] dashboard page
+* [] main feature
 
 
 See [open issues](https://github.com/Grizmo2610/WhenToMeet/issues) for planned features and bug reports.
