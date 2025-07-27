@@ -33,8 +33,9 @@ class Database:
         self.execute('''
             CREATE TABLE IF NOT EXISTS users (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                username TEXT NOT NULL UNIQUE,
+                email TEXT NOT NULL UNIQUE,
                 password TEXT NOT NULL,
+                username TEXT NOT NULL,
                 createdAt TIMESTAMP NOT NULL,
                 lastLogin TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
@@ -66,16 +67,18 @@ class Database:
         self.execute("DROP TABLE IF EXISTS meetings")
         self.execute("DROP TABLE IF EXISTS users")
 
-    def new_user(self, username, password):
+    def new_user(self, email, password, username):
         now: datetime = datetime.now(timezone.utc)
         self.execute(
-            "INSERT INTO users (username, password, createdAt, lastLogin) VALUES (?, ?, ?, ?)",
-            (username, password, now.isoformat(), now.isoformat())
+            "INSERT INTO users (email, password, username, createdAt, lastLogin) VALUES (?, ?, ?, ?, ?)",
+            (email, password, username, now.isoformat(), now.isoformat())
             )
 
     def find_user(self, key: str, value: str):
         if key == "username":
             return self.fetch_one("SELECT id FROM users WHERE username = ?", (value,))
+        elif key == "email":
+            return self.fetch_one("SELECT id FROM users WHERE email = ?", (value,))
         elif key == "user_id":
             return self.fetch_one("SELECT id FROM users WHERE id = ", (value, ))
         return None

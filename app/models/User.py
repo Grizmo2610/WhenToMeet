@@ -5,28 +5,35 @@ from .Database import Database
 class User:
     def __init__(self, db):
         self.db: Database = db
-        
-    def register(self, username: str, password: str) -> bool:
-        if self.db.find_user("username", username):
-            return False
-        hashed = generate_password_hash(password)
-        self.db.new_user(username, hashed)
-        return True
 
-    def login(self, username: str, password: str) -> dict | None:
+    def register(self, email: str, password: str, username: str) -> dict[str, int | str]:
+        if self.db.find_user("email", email):
+            return {'status': 409, 'message': 'Email already exists'}
+        hashed = generate_password_hash(password)
+        self.db.new_user(email, hashed, username)
+        return {'status': 200, 'message': 'Registration successful'}
+
+    def login(self,  email: str, password: str) -> dict | None:
         user = self.db.fetch_one(
-            "SELECT id, username, password, createdAt, lastLogin FROM users WHERE username = ?",
-            (username,)
+            "SELECT id, email, password, username, createdAt, lastLogin FROM users WHERE email = ?",
+            (email,)
         )
-        if user and check_password_hash(user[2], password):
-            self.update_last_login(user[0])
-            return {
-                "id": user[0],
-                "username": user[1],
-                "created_at": user[3],
-                "last_login": user[4]
+        if user:
+            if check_password_hash(user[2], password):
+                self.update_last_login(user[0])
+                return {
+                    "id": user[0],
+                    "name": user[1],
+                    "username": user[2],
+                    "created_at": user[4],
+                    "last_login": user[5],
+                    "status": 200,
+                    "message": "Succesfully" ,
+                }
+        return {
+            "status": 401,
+            "message": "Invalid email or password"
             }
-        return None
 
     def update_last_login(self, user_id: int):
         now = datetime.now().isoformat()

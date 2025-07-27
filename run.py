@@ -12,7 +12,9 @@ app: Flask = create_app()
 @app.route('/')
 def login_page() -> str:
     return render_template('login.html')
-
+@app.route('/dashboard')
+def main_page():
+    return render_template('dashboard.html')
 
 @app.route('/logout')
 def logout() -> Response:
