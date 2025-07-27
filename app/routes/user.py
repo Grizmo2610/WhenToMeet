@@ -1,4 +1,3 @@
-from unittest import result
 from flask import Blueprint, Response, redirect, url_for, request, session, jsonify
 from app.models import User, Database
 from app.ultils import *
