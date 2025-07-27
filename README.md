@@ -14,7 +14,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/Grizmo2610/WhenToMeet">
-    <img src="static/images/Logo.png" alt="Logo" width="80" height="80">
+    <img src="app/static/images/Logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">When To Meet</h3>
