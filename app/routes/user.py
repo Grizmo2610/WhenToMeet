@@ -15,10 +15,7 @@ def login() -> Response:
         session.permanent = True
         session['user_id'] = user_data['id']
         session['username'] = user_data['username']
-        redirect(url_for("main_page"))
-        return jsonify(user_data)
-    else:
-        return jsonify(user_data)
+    return jsonify(user_data)
 
 
 @user_bp.route('/api/signup', methods=['POST'])

@@ -1,11 +1,348 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-</head>
-<body>
-    
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ScheduleSync - Find the Perfect Meeting Time</title>
+        <script src="https://cdn.tailwindcss.com"></script>
+        <link rel="icon"
+            href="{{ url_for('static', filename='images/logo.ico') }}"
+            type="image/x-icon">
+        <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+        <style>
+        .time-cell {
+            height: 30px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .time-cell:hover {
+            background-color: #f0fdf4;
+        }
+        .time-cell.selected {
+            background-color: #86efac;
+        }
+        .time-cell.maybe {
+            background-color: #fef08a;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            gap: 2px;
+        }
+        .day-header {
+            text-align: center;
+            font-weight: bold;
+            padding: 8px 0;
+            background-color: #f8fafc;
+        }
+        .date-cell {
+            text-align: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        @media (max-width: 768px) {
+            .calendar-container {
+                overflow-x: auto;
+            }
+        }
+    </style>
+    </head>
+    <body class="bg-gray-50 min-h-screen pt-16">
+        <!-- Navigation Dashboard -->
+        <nav class="bg-white shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between h-16">
+                    <div class="flex items-center">
+                        <span
+                            class="text-xl font-semibold text-indigo-600">ScheduleSync</span>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button
+                            class="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+                            <i class="fas fa-plus mr-1"></i> Tạo cuộc họp
+                        </button>
+                        <button
+                            class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                            <i class="fas fa-history mr-1"></i> Lịch sử
+                        </button>
+                        <div class="flex items-center space-x-4">
+                            <span class="text-gray-700">Xin chào, Người
+                                dùng</span>
+                            <div
+                                class="w-8 h-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                                <i class="fas fa-user text-indigo-600"></i>
+                            </div>
+                            <button
+                                class="text-gray-500 hover:text-gray-700 transition">
+                                <i class="fas fa-sign-out-alt"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto px-4 py-8">
+            <!-- Header -->
+            <header class="mb-8 text-center">
+                <h1
+                    class="text-3xl font-bold text-indigo-700 mb-2">ScheduleSync</h1>
+                <p class="text-gray-600">Find the perfect time for your group to
+                    meet</p>
+            </header>
+
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">What dates
+                    might work?</h2>
+                <p class="text-gray-600 mb-4">Click and drag dates to choose
+                    possibilities. Click and drag labels to shift the
+                    calendar.</p>
+
+                <!-- Calendar Navigation -->
+                <div class="flex justify-between items-center mb-4">
+                    <button
+                        class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <h3 class="text-lg font-medium">July/August 2025</h3>
+                    <button
+                        class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+                <!-- Calendar Grid -->
+                <div class="calendar-container">
+                    <div class="calendar-grid mb-4">
+                        <!-- Day headers -->
+                        <div class="day-header">S</div>
+                        <div class="day-header">M</div>
+                        <div class="day-header">T</div>
+                        <div class="day-header">W</div>
+                        <div class="day-header">T</div>
+                        <div class="day-header">F</div>
+                        <div class="day-header">S</div>
+                        <div class="day-header">Week</div>
+
+                        <!-- Dates -->
+                        <div class="date-cell text-gray-400">27</div>
+                        <div class="date-cell text-gray-400">28</div>
+                        <div class="date-cell text-gray-400">29</div>
+                        <div class="date-cell text-gray-400">30</div>
+                        <div class="date-cell text-gray-400">31</div>
+                        <div class="date-cell">1</div>
+                        <div class="date-cell">2</div>
+                        <div class="date-cell font-medium">Jul 27 - Aug 2</div>
+
+                        <div class="date-cell">3</div>
+                        <div class="date-cell">4</div>
+                        <div class="date-cell">5</div>
+                        <div class="date-cell">6</div>
+                        <div class="date-cell">7</div>
+                        <div class="date-cell">8</div>
+                        <div class="date-cell">9</div>
+                        <div class="date-cell font-medium">Aug 3 - 9</div>
+
+                        <div class="date-cell">10</div>
+                        <div class="date-cell">11</div>
+                        <div class="date-cell">12</div>
+                        <div class="date-cell">13</div>
+                        <div class="date-cell">14</div>
+                        <div class="date-cell">15</div>
+                        <div class="date-cell">16</div>
+                        <div class="date-cell font-medium">Aug 10 - 16</div>
+
+                        <div class="date-cell">17</div>
+                        <div class="date-cell">18</div>
+                        <div class="date-cell">19</div>
+                        <div class="date-cell">20</div>
+                        <div class="date-cell">21</div>
+                        <div class="date-cell">22</div>
+                        <div class="date-cell">23</div>
+                        <div class="date-cell font-medium">Aug 17 - 23</div>
+
+                        <div class="date-cell">24</div>
+                        <div class="date-cell">25</div>
+                        <div class="date-cell">26</div>
+                        <div class="date-cell">27</div>
+                        <div class="date-cell">28</div>
+                        <div class="date-cell">29</div>
+                        <div class="date-cell">30</div>
+                        <div class="date-cell font-medium">Aug 24 - 30</div>
+                    </div>
+                </div>
+
+                <!-- Selection Legend -->
+                <div class="flex items-center space-x-4 mb-6">
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-emerald-300 mr-2"></div>
+                        <span class="text-sm">Available</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-yellow-200 mr-2"></div>
+                        <span class="text-sm">Maybe</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-4 h-4 bg-gray-200 mr-2"></div>
+                        <span class="text-sm">Unavailable</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold text-gray-800 mb-4">What times
+                    might work?</h2>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div>
+                        <label class="block text-gray-700 mb-2">No earlier
+                            than:</label>
+                        <select
+                            class="w-full p-2 border border-gray-300 rounded-md">
+                            <option>8:00 AM</option>
+                            <option>9:00 AM</option>
+                            <option>10:00 AM</option>
+                            <option>11:00 AM</option>
+                            <option>12:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">No later
+                            than:</label>
+                        <select
+                            class="w-full p-2 border border-gray-300 rounded-md">
+                            <option>5:00 PM</option>
+                            <option>6:00 PM</option>
+                            <option>7:00 PM</option>
+                            <option>8:00 PM</option>
+                            <option>9:00 PM</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-gray-700 mb-2">Time
+                            Zone:</label>
+                        <select
+                            class="w-full p-2 border border-gray-300 rounded-md">
+                            <option>Eastern Time (ET)</option>
+                            <option>Central Time (CT)</option>
+                            <option>Mountain Time (MT)</option>
+                            <option>Pacific Time (PT)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Time Grid -->
+                <div class="mb-6">
+                    <div class="flex justify-between mb-2">
+                        <span class="text-sm text-gray-600">Morning</span>
+                        <span class="text-sm text-gray-600">Afternoon</span>
+                        <span class="text-sm text-gray-600">Evening</span>
+                    </div>
+
+                    <div class="grid grid-cols-8 gap-1">
+                        <div class="col-span-1"></div>
+                        <div class="text-center text-sm py-1">Mon</div>
+                        <div class="text-center text-sm py-1">Tue</div>
+                        <div class="text-center text-sm py-1">Wed</div>
+                        <div class="text-center text-sm py-1">Thu</div>
+                        <div class="text-center text-sm py-1">Fri</div>
+                        <div class="text-center text-sm py-1">Sat</div>
+                        <div class="text-center text-sm py-1">Sun</div>
+
+                        <!-- Time slots would be generated here -->
+                        <!-- Example row -->
+                        <div class="text-right pr-2 text-sm">8 AM</div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+
+                        <div class="text-right pr-2 text-sm">9 AM</div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+                        <div class="time-cell"></div>
+
+                        <!-- More time slots would follow -->
+                    </div>
+                </div>
+
+                <div class="flex justify-between items-center">
+                    <div>
+                        <button
+                            class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 transition mr-2">
+                            <i class="fas fa-trash-alt mr-1"></i> Clear
+                        </button>
+                        <button
+                            class="px-4 py-2 bg-gray-100 rounded-md hover:bg-gray-200 transition">
+                            <i class="fas fa-question-circle mr-1"></i> Help
+                        </button>
+                    </div>
+                    <button
+                        class="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition">
+                        <i class="fas fa-check mr-1"></i> Save Availability
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+        // Add interactivity to time cells
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeCells = document.querySelectorAll('.time-cell');
+            let isDragging = false;
+            let currentSelection = 'selected'; // or 'maybe' or 'none'
+            
+            // Handle click on time cells
+            timeCells.forEach(cell => {
+                cell.addEventListener('mousedown', function(e) {
+                    isDragging = true;
+                    toggleCell(this);
+                    e.preventDefault(); // Prevent text selection
+                });
+                
+                cell.addEventListener('mouseenter', function() {
+                    if (isDragging) {
+                        toggleCell(this);
+                    }
+                });
+            });
+            
+            // Handle mouse up anywhere in document
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+            
+            function toggleCell(cell) {
+                if (cell.classList.contains('selected')) {
+                    cell.classList.remove('selected');
+                    cell.classList.add('maybe');
+                } else if (cell.classList.contains('maybe')) {
+                    cell.classList.remove('maybe');
+                } else {
+                    cell.classList.add('selected');
+                }
+            }
+            
+            // Add date selection functionality
+            const dateCells = document.querySelectorAll('.date-cell:not(.text-gray-400)');
+            dateCells.forEach(cell => {
+                cell.addEventListener('click', function() {
+                    dateCells.forEach(c => c.classList.remove('bg-indigo-100', 'text-indigo-700'));
+                    this.classList.add('bg-indigo-100', 'text-indigo-700');
+                });
+            });
+        });
+    </script>
+    </body>
 </html>

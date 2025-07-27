@@ -82,7 +82,6 @@ loginForm.addEventListener("submit", async (e) => {
     const result = await request_api("/user/api/login", formData);
     if (result.status == 200) {
         console.log("Log in Successfully!");
-        window.location.href = "/dashboard";
     } else {
         alert("Log In failed: " + result.message);
         console.log(result.status);

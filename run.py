@@ -1,17 +1,18 @@
 from flask import Flask, Response, render_template, redirect, url_for, request, session, jsonify
 
-from app import create_app
-from app import routes
+from app import *
 import os
 
 app: Flask = create_app()
 
-
 @app.route('/')
 def login_page() -> str:
+    if 'user_id' in session:
+        return redirect(url_for('main_page'))
     return render_template('login.html')
 
 @app.route('/dashboard')
+@login_required
 def main_page():
     return render_template('dashboard.html')
 
@@ -23,3 +24,4 @@ def logout() -> Response:
 
 if __name__ == "__main__":
     app.run(debug=True)
+    session.clear()
